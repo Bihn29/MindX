@@ -3,7 +3,7 @@ const OPENID_CONFIG = {
   issuer: 'https://id-dev.mindx.edu.vn',
   authorizationEndpoint: 'https://id-dev.mindx.edu.vn/oauth2/authorize',
   tokenEndpoint: 'https://id-dev.mindx.edu.vn/oauth2/token',
-  clientId: import.meta.env.VITE_OPENID_CLIENT_ID || '',
+  clientId: import.meta.env.VITE_OPENID_CLIENT_ID || 'mindx-onboarding',
   redirectUri: `${window.location.origin}/auth/callback`,
   responseType: 'code',
   scope: 'openid profile email',
