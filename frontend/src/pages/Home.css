@@ -19,9 +19,9 @@
   margin-bottom: 2rem;
 }
 
-/* Header Section with Blue Gradient */
+/* Header Section with Red Gradient */
 .card-header {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(135deg, #E02D28 0%, #C41E3A 100%);
   padding: 3rem 2rem 2rem;
   text-align: center;
 }
@@ -71,21 +71,21 @@
 }
 
 .mindx-link {
-  color: #3498db;
+  color: #E02D28;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
 }
 
 .mindx-link:hover {
-  color: #2980b9;
+  color: #C41E3A;
   text-decoration: underline;
 }
 
 /* Login Button */
 .login-button {
   width: 100%;
-  background: #3498db;
+  background: #E02D28;
   color: white;
   border: none;
   border-radius: 8px;
@@ -102,7 +102,7 @@
 }
 
 .login-button:hover {
-  background: #2980b9;
+  background: #C41E3A;
   transform: translateY(-1px);
 }
 
@@ -182,7 +182,7 @@
 
 .spinner-small {
   border: 3px solid #f3f3f3;
-  border-top: 3px solid #3498db;
+  border-top: 3px solid #E02D28;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -208,7 +208,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  border: 3px solid #3498db;
+  border: 3px solid #E02D28;
   margin-bottom: 1rem;
 }
 
