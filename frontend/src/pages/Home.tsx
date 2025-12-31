@@ -7,8 +7,6 @@ import './Home.css'
 
 function Home() {
   const navigate = useNavigate()
-  const [apiAvailable, setApiAvailable] = useState<boolean>(false)
-  const [environment, setEnvironment] = useState<string>('development')
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
@@ -18,17 +16,12 @@ function Home() {
   useEffect(() => {
     const initialize = async () => {
       // Log redirect URI info for admin registration
-      const env = import.meta.env.MODE || 'development'
       logRedirectUriInfo()
 
       // Check API status
       try {
-        const healthResponse = await axios.get(`${API_BASE_URL}/health`)
-        setApiAvailable(true)
-        setEnvironment(healthResponse.data?.environment || env)
+        await axios.get(`${API_BASE_URL}/health`)
       } catch (err) {
-        setApiAvailable(false)
-        setEnvironment(env)
         console.error('API Error:', err)
       }
 
