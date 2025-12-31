@@ -1,0 +1,37 @@
+# Self-signed ClusterIssuer for development/testing
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-issuer
+spec:
+  selfSigned: {}
+---
+# Certificate for the application
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mindx-week1-tls
+  namespace: default
+spec:
+  secretName: mindx-week1-tls-secret
+  duration: 2160h # 90 days
+  renewBefore: 360h # 15 days
+  subject:
+    organizations:
+      - MindX
+  commonName: "20.24.116.192.nip.io"
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - "20.24.116.192.nip.io"
+    - "*.20.24.116.192.nip.io"
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io

@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fullstack-ingress-https
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # Force redirect HTTP to HTTPS
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - <your-domain.com>  # Thay bằng domain của bạn
+    secretName: tls-secret
+  rules:
+  - host: <your-domain.com>  # Thay bằng domain của bạn
+    http:
+      paths:
+      # React App - root path
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: react-app-service
+            port:
+              number: 8080
+      # Backend API - /api path
+      - path: /api(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-service
+            port:
+              number: 3000
+      # Health check
+      - path: /health
+        pathType: Exact
+        backend:
+          service:
+            name: backend-service
+            port:
+              number: 3000
+
