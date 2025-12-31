@@ -81,11 +81,6 @@ class AuthService {
 
       const authUrl = `${OPENID_CONFIG.authorizationEndpoint}?${params.toString()}`
       
-      console.log('🔐 Initiating OpenID login flow...')
-      console.log('📍 Auth URL:', authUrl)
-      console.log('🔑 Client ID:', OPENID_CONFIG.clientId)
-      console.log('🔄 Redirect URI:', OPENID_CONFIG.redirectUri)
-      
       // Redirect to authorization server
       window.location.href = authUrl
     } catch (error) {
@@ -96,8 +91,6 @@ class AuthService {
 
   // Handle callback from authorization server
   async handleCallback(code: string, state: string): Promise<AuthTokens> {
-    console.log('🔄 Processing auth callback...')
-    
     // Verify state
     const storedState = sessionStorage.getItem('oauth_state')
     if (!storedState || storedState !== state) {
@@ -115,7 +108,6 @@ class AuthService {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
     
     try {
-      console.log('🔑 Exchanging code for tokens...')
       const response = await fetch(`${API_BASE_URL}/auth/token`, {
         method: 'POST',
         headers: {
@@ -135,7 +127,6 @@ class AuthService {
       }
 
       const tokens: AuthTokens = await response.json()
-      console.log('✅ Tokens received successfully')
       
       // Store tokens
       this.setTokens(tokens)
