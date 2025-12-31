@@ -56,7 +56,7 @@ app.post('/api/auth/token', async (req: Request, res: Response) => {
     }
 
     // Exchange authorization code for tokens
-    const tokenEndpoint = 'https://id-dev.mindx.edu.vn/oauth2/token';
+    const tokenEndpoint = 'https://id-dev.mindx.edu.vn/token';
     const clientId = process.env.OPENID_CLIENT_ID || '';
     const clientSecret = process.env.OPENID_CLIENT_SECRET || '';
 
@@ -100,7 +100,7 @@ app.get('/api/auth/userinfo', async (req: Request, res: Response) => {
     const accessToken = authHeader.substring(7);
 
     // Get user info from OpenID provider
-    const userInfoEndpoint = 'https://id-dev.mindx.edu.vn/oauth2/userinfo';
+    const userInfoEndpoint = 'https://id-dev.mindx.edu.vn/me';
     
     const userInfoResponse = await fetch(userInfoEndpoint, {
       headers: {
