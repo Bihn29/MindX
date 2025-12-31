@@ -69,7 +69,6 @@ function Home() {
         {/* Header Section with Blue Gradient */}
         <div className="card-header">
           <h1 className="portal-title">MindX Portal</h1>
-          <p className="portal-subtitle">Azure Cloud Deployment</p>
         </div>
 
         {/* Body Section */}
@@ -115,18 +114,6 @@ function Home() {
               <p className="login-instruction">
                 Sử dụng tài khoản MindX ID của bạn
               </p>
-              <p className="redirect-notice">
-                Bạn sẽ được chuyển đến{' '}
-                <a 
-                  href="https://id-dev.mindx.edu.vn" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="mindx-link"
-                >
-                  id-dev.mindx.edu.vn
-                </a>{' '}
-                để đăng nhập
-              </p>
               
               <button 
                 className="login-button"
@@ -135,18 +122,6 @@ function Home() {
                 <span className="info-icon">ℹ</span>
                 Login with MindX OpenID
               </button>
-
-              <p className="auth-source">
-                Authentication powered by{' '}
-                <a 
-                  href="https://id-dev.mindx.edu.vn" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="auth-link"
-                >
-                  id-dev.mindx.edu.vn
-                </a>
-              </p>
             </>
           )}
         </div>
