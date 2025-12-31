@@ -126,22 +126,6 @@ function Home() {
           )}
         </div>
       </div>
-
-      {/* Status Information at Bottom */}
-      <div className="status-info">
-        <p className="status-line">
-          MindX Engineer Onboarding
-        </p>
-        <p className="status-line">
-          API Status:{' '}
-          <span className={`api-status ${apiAvailable ? 'available' : 'unavailable'}`}>
-            {apiAvailable ? '✓' : '✗'} API {apiAvailable ? 'Available' : 'Unavailable'}
-          </span>
-        </p>
-        <p className="status-line">
-          Environment: <span className="environment">{environment}</span>
-        </p>
-      </div>
     </div>
   )
 }
