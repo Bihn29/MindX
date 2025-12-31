@@ -26,7 +26,7 @@ app.get('/health', (req: Request, res: Response) => {
 // Hello world endpoint
 app.get('/', (req: Request, res: Response) => {
   res.json({
-    message: 'Hello World from Week 1 API!',
+    message: 'Hello World from Week1 API!',
     version: '1.0.0',
     timestamp: new Date().toISOString()
   });
@@ -35,9 +35,9 @@ app.get('/', (req: Request, res: Response) => {
 // API info endpoint
 app.get('/api/info', (req: Request, res: Response) => {
   res.json({
-    name: 'Week 1 API',
+    name: 'Week1 API',
     version: '1.0.0',
-    description: 'Full-stack application API for Week 1',
+    description: 'Full-stack application API for Week1',
     endpoints: {
       health: '/health',
       hello: '/',

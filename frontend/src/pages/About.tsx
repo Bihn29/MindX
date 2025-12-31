@@ -38,9 +38,9 @@ function About() {
         )}
 
         <section>
-          <h2>Week 1 Full-Stack Application</h2>
+          <h2>Week1 Full-Stack Application</h2>
           <p>
-            This is a full-stack application built for Week 1 of the MindX Engineer Onboarding program.
+            This is a full-stack application built for the MindX Engineer Onboarding program.
           </p>
         </section>
 

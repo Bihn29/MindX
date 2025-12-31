@@ -69,7 +69,7 @@ function Home() {
         {/* Header Section with Blue Gradient */}
         <div className="card-header">
           <h1 className="portal-title">MindX Portal</h1>
-          <p className="portal-subtitle">Azure Cloud Deployment • Week 1</p>
+          <p className="portal-subtitle">Azure Cloud Deployment</p>
         </div>
 
         {/* Body Section */}
@@ -155,7 +155,7 @@ function Home() {
       {/* Status Information at Bottom */}
       <div className="status-info">
         <p className="status-line">
-          MindX Engineer Onboarding • Lab Week 1
+          MindX Engineer Onboarding
         </p>
         <p className="status-line">
           API Status:{' '}

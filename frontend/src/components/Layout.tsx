@@ -11,7 +11,7 @@ function Layout({ children }: LayoutProps) {
       <nav className="navbar">
         <div className="nav-container">
           <Link to="/" className="nav-logo">
-            Week 1 App
+            Week1
           </Link>
           <div className="nav-menu">
             <Link to="/" className="nav-link">
@@ -27,7 +27,7 @@ function Layout({ children }: LayoutProps) {
         {children}
       </main>
       <footer className="footer">
-        <p>&copy; 2024 Week 1 Full-Stack Application</p>
+        <p>&copy; 2024 Week1</p>
       </footer>
     </div>
   )
