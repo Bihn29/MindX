@@ -117,7 +117,11 @@ class AuthService {
     }
 
     // Exchange authorization code for tokens
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
+    const API_BASE_URL =
+      import.meta.env.VITE_API_BASE_URL
+      || (window.location.host.includes('azurewebsites.net')
+        ? 'https://mindx-week1-backend.azurewebsites.net/api'
+        : '/api')
     
     try {
       const response = await fetch(`${API_BASE_URL}/auth/token`, {
