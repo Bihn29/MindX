@@ -89,6 +89,8 @@ class AuthService {
         code_challenge: codeChallenge,
         code_challenge_method: OPENID_CONFIG.codeChallengeMethod,
         response_mode: 'query',
+        // Try to skip consent if IdP supports it
+        approval_prompt: 'auto',
       })
 
       const authUrl = `${OPENID_CONFIG.authorizationEndpoint}?${params.toString()}`
