@@ -57,7 +57,7 @@ app.post('/api/auth/token', async (req: Request, res: Response) => {
 
     // Exchange authorization code for tokens
     const tokenEndpoint = 'https://id-dev.mindx.edu.vn/token';
-    const clientId = process.env.OPENID_CLIENT_ID || '';
+    const clientId = process.env.OPENID_CLIENT_ID || 'mindx-onboarding';
     const clientSecret = process.env.OPENID_CLIENT_SECRET || '';
 
     const tokenResponse = await fetch(tokenEndpoint, {
