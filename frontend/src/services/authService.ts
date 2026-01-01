@@ -152,10 +152,16 @@ class AuthService {
 
         console.error('❌ Token exchange failed:', errorPayload)
 
-        const message =
-          (errorPayload && typeof errorPayload === 'object' && (errorPayload.idp_error_description || errorPayload.error))
-            ? (errorPayload.idp_error_description || errorPayload.error)
-            : (typeof errorPayload === 'string' && errorPayload.trim() ? errorPayload : 'Failed to exchange code for tokens')
+        const message = (() => {
+          if (errorPayload && typeof errorPayload === 'object') {
+            if (errorPayload.idp_error_description) return errorPayload.idp_error_description
+            if (errorPayload.error_description) return errorPayload.error_description
+            if (errorPayload.error) return errorPayload.error
+            return JSON.stringify(errorPayload)
+          }
+          if (typeof errorPayload === 'string' && errorPayload.trim()) return `HTTP ${response.status}: ${errorPayload}`
+          return `HTTP ${response.status}: Failed to exchange code for tokens`
+        })()
 
         throw new Error(message)
       }
