@@ -14,11 +14,20 @@ function AuthCallback() {
       const code = searchParams.get('code')
       const state = searchParams.get('state')
       const errorParam = searchParams.get('error')
+      const errorDescription = searchParams.get('error_description')
+
+      console.log('🔄 Processing OAuth callback...')
+      console.log('📍 Current URL:', window.location.href)
+      console.log('📋 Params:', { code: code ? '✓' : '✗', state: state ? '✓' : '✗', error: errorParam })
 
       // Check for error from authorization server
       if (errorParam) {
         setStatus('error')
-        setError(`Authorization error: ${errorParam}`)
+        const fullError = errorDescription 
+          ? `${errorParam}: ${errorDescription}` 
+          : errorParam
+        setError(`Authorization error: ${fullError}`)
+        console.error('❌ OAuth error from IdP:', { errorParam, errorDescription })
         return
       }
 
@@ -26,12 +35,15 @@ function AuthCallback() {
       if (!code || !state) {
         setStatus('error')
         setError('Missing authorization code or state')
+        console.error('❌ Missing required OAuth parameters')
         return
       }
 
       try {
         // Exchange code for tokens
+        console.log('🔄 Exchanging code for tokens...')
         await authService.handleCallback(code, state)
+        console.log('✅ Token exchange successful')
         setStatus('success')
         
         // Redirect to home after short delay
@@ -40,8 +52,9 @@ function AuthCallback() {
         }, 2000)
       } catch (err) {
         setStatus('error')
-        setError(err instanceof Error ? err.message : 'Authentication failed')
-        console.error('Callback processing error:', err)
+        const errorMessage = err instanceof Error ? err.message : 'Authentication failed'
+        setError(errorMessage)
+        console.error('❌ Callback processing error:', err)
       }
     }
 

@@ -69,15 +69,27 @@ class AuthService {
       sessionStorage.setItem('code_verifier', codeVerifier)
       sessionStorage.setItem('oauth_state', state)
 
-      // Build authorization URL
+      // Generate nonce for additional security
+      const nonce = generateState()
+      sessionStorage.setItem('oauth_nonce', nonce)
+
+      console.log('🔐 OAuth Login Flow')
+      console.log('📍 Redirect URI:', OPENID_CONFIG.redirectUri)
+      console.log('📋 Client ID:', OPENID_CONFIG.clientId)
+      console.log('⚠️  Make sure this Redirect URI is whitelisted on IdP!')
+
+      // Build authorization URL with additional parameters
       const params = new URLSearchParams({
         client_id: OPENID_CONFIG.clientId,
         redirect_uri: OPENID_CONFIG.redirectUri,
         response_type: OPENID_CONFIG.responseType,
         scope: OPENID_CONFIG.scope,
         state: state,
+        nonce: nonce,
         code_challenge: codeChallenge,
         code_challenge_method: OPENID_CONFIG.codeChallengeMethod,
+        prompt: 'login',
+        response_mode: 'query',
       })
 
       const authUrl = `${OPENID_CONFIG.authorizationEndpoint}?${params.toString()}`
@@ -122,9 +134,27 @@ class AuthService {
       })
 
       if (!response.ok) {
-        const errorData = await response.text()
-        console.error('❌ Token exchange failed:', errorData)
-        throw new Error('Failed to exchange code for tokens')
+        const contentType = response.headers.get('content-type') || ''
+        let errorPayload: any = null
+
+        try {
+          if (contentType.includes('application/json')) {
+            errorPayload = await response.json()
+          } else {
+            errorPayload = await response.text()
+          }
+        } catch {
+          // ignore parse errors
+        }
+
+        console.error('❌ Token exchange failed:', errorPayload)
+
+        const message =
+          (errorPayload && typeof errorPayload === 'object' && (errorPayload.idp_error_description || errorPayload.error))
+            ? (errorPayload.idp_error_description || errorPayload.error)
+            : (typeof errorPayload === 'string' && errorPayload.trim() ? errorPayload : 'Failed to exchange code for tokens')
+
+        throw new Error(message)
       }
 
       const tokens: AuthTokens = await response.json()

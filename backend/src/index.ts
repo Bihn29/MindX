@@ -23,6 +23,16 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
+// Health check alias under /api for reverse-proxy setups
+app.get('/api/health', (req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
 // Hello world endpoint
 app.get('/', (req: Request, res: Response) => {
   res.json({
@@ -76,9 +86,29 @@ app.post('/api/auth/token', async (req: Request, res: Response) => {
     });
 
     if (!tokenResponse.ok) {
-      const error = await tokenResponse.text();
-      console.error('Token exchange error:', error);
-      return res.status(tokenResponse.status).json({ error: 'Token exchange failed' });
+      const rawBody = await tokenResponse.text();
+      let parsedBody: unknown = rawBody;
+      try {
+        parsedBody = JSON.parse(rawBody);
+      } catch {
+        // keep rawBody as-is
+      }
+
+      console.error('Token exchange error', {
+        status: tokenResponse.status,
+        clientId,
+        redirectUri: redirect_uri,
+        body: typeof parsedBody === 'string' ? parsedBody.slice(0, 2000) : parsedBody,
+      });
+
+      // Return a useful (but bounded) error to the frontend for debugging.
+      return res.status(tokenResponse.status).json({
+        error: 'Token exchange failed',
+        idp_status: tokenResponse.status,
+        idp_error: (typeof parsedBody === 'object' && parsedBody && 'error' in (parsedBody as any)) ? (parsedBody as any).error : undefined,
+        idp_error_description: (typeof parsedBody === 'object' && parsedBody && 'error_description' in (parsedBody as any)) ? (parsedBody as any).error_description : undefined,
+        idp_body: typeof parsedBody === 'string' ? parsedBody.slice(0, 500) : parsedBody,
+      });
     }
 
     const tokens = await tokenResponse.json();
