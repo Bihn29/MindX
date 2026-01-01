@@ -9,6 +9,7 @@ const OPENID_CONFIG = {
   responseType: 'code',
   scope: 'openid profile email',
   codeChallengeMethod: 'S256',
+  prompt: (import.meta.env.VITE_OPENID_PROMPT as string | undefined) || 'login',
 }
 
 // Generate code verifier and challenge for PKCE
@@ -90,6 +91,10 @@ class AuthService {
         code_challenge_method: OPENID_CONFIG.codeChallengeMethod,
         response_mode: 'query',
       })
+
+      if (OPENID_CONFIG.prompt) {
+        params.set('prompt', OPENID_CONFIG.prompt)
+      }
 
       const authUrl = `${OPENID_CONFIG.authorizationEndpoint}?${params.toString()}`
       
