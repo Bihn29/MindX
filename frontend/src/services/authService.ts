@@ -88,7 +88,6 @@ class AuthService {
         nonce: nonce,
         code_challenge: codeChallenge,
         code_challenge_method: OPENID_CONFIG.codeChallengeMethod,
-        prompt: 'login',
         response_mode: 'query',
       })
 
