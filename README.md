@@ -33,7 +33,9 @@ Dự án triển khai **full-stack application** (React + Node.js/Express) lên 
 ### Learning Environment (AKS) ⚠️
 - **Cluster**: mindx-week1-aks (East Asia, k8s 1.33.5)
 - **Pods**: 4/4 Running (2 backend + 2 frontend replicas)
-- **Access**: Port-forward only (network restricted) - Xem [AKS_LOCAL_ACCESS.md](./AKS_LOCAL_ACCESS.md)
+- **Access**: Port-forward only (Azure NSG chặn public traffic)
+- **URL**: http://localhost:8080 (sau khi chạy port-forward)
+- **Hướng dẫn**: [FIX_CONNECTION_TIMEOUT.md](./FIX_CONNECTION_TIMEOUT.md) - Fix lỗi ERR_CONNECTION_TIMED_OUT
 
 ---
 
