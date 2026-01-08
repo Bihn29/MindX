@@ -1,9 +1,13 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { setupAppInsights } from './appInsights';
 
 // Load environment variables
 dotenv.config();
+
+// Initialize Application Insights (must be done early)
+setupAppInsights();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -195,6 +199,22 @@ app.get('/api/auth/userinfo', async (req: Request, res: Response) => {
     console.error('User info endpoint error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// Test endpoints for monitoring alerts
+app.get('/api/test/error', (req: Request, res: Response) => {
+  console.error('Test error triggered');
+  res.status(500).json({ error: 'This is a test error for monitoring alerts' });
+});
+
+app.get('/api/test/slow', async (req: Request, res: Response) => {
+  // Simulate slow response (2 seconds)
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  res.json({ message: 'Slow response completed', delay: '2000ms' });
+});
+
+app.get('/api/test/exception', (req: Request, res: Response) => {
+  throw new Error('Test exception for monitoring');
 });
 
 // Start server
